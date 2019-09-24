@@ -26,10 +26,10 @@ func GetSingleMember(memberId string) {
 		Id: memberId,
 	}
 
-	memeberRecrod, err := pkMembersClient.GetMemberRecordById(ctx, id)
+	memberRecord, err := pkMembersClient.GetMemberRecordById(ctx, id)
 	if err != nil {
 		log.Fatalf("Get member err: %v", err)
 	}
 
-	fmt.Printf("You have successfully retrieved a member record for [%s] %v\n", memberId, *memeberRecrod)
+	fmt.Printf("You have successfully retrieved a member record for [%s] %v\n", memberId, *memberRecord)
 }

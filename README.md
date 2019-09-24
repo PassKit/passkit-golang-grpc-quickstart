@@ -42,7 +42,7 @@ import(
 ## Quickstart
 By completing this Quickstart, you will be able to issue a membership card for a new member.
 
-1. Get [prerequisites](#prerequisites)
+1. Ensure your followed the steps in [prerequisites](#prerequisites).
 
 2. Install passkit-io-go with:
    ```go
@@ -61,7 +61,7 @@ By completing this Quickstart, you will be able to issue a membership card for a
 
 ## Examples
 #### Issue A Membership Card.
-Follow 5 steps of [Quickstart](#quickstart) to create a sample membership card and view it on your mobile.
+Follow the steps of the [Quickstart](#quickstart) to create a sample membership card and experience it in your Mobile Wallet.
 
 #### Engage With Your Members
 `EngageWithMembers()` contains multiple methods you can use to engage with your members. 
