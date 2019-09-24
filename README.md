@@ -52,7 +52,7 @@ By completing this Quickstart, you will be able to issue a membership card for a
 3. When you created an account (Prerequisites #1), you should have received 3 files: `certificate.pem`, `key.pem` and `ca-chain.pem` by email. Please save those 3 files under `passkit-golang-members-quickstart/certs` directory. These .pem files are required to authenticate your accesss to PassKit.IO server.
 
 4. Now we need to decrypt your `key.pem`. At your project root directory, run `cd ./certs openssl ec -in key.pem -out key.pem`. Your `key.pem` file should look like below.
-   ![ScreenShot](https://github.com/PassKit/passkit-golang-members-quickstart/images/decrypted_key_pem.png)
+   ![ScreenShot](https://raw.githubusercontent.com/PassKit/passkit-golang-members-quickstart/master/images/decrypted_key_pem.png)
    If you do not see `Proc-Type: 4,ENCEYPTED` on line 2, you have successfully decrypted `key.pem`. 
 
 5. Replace `YOUR_EMAIL_ADDRESS@EMAIL.COM` in `main.go` with your email address in order to receive the welcome email with card url which your member will also receive.
