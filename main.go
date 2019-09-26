@@ -24,7 +24,7 @@ const (
 	clientKeyFile  = "certs/key.pem"         // [Required] Please store your key.pem at ./certs directory. Your private key you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login). You need to decrypt the key before use. Check README.md for details.
 	clientCAFile   = "certs/ca-chain.pem"    // [Required] Please store your ca-chain.pem at ./certs directory. The certificate chain you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login).
 
-	emailAddressToReceiveSamplePassUrl = "YOUR_EMAIL_ADDRESS@EMAIL.COM" // [Required] Please set your email address to receive digital card url by email.
+	emailAddressToReceiveSamplePassUrl = "" // [Required] Please set your email address to receive digital card url by email.
 )
 
 // These variables will be used by EngageWithMembers methods.
@@ -76,7 +76,6 @@ func EngageWithMembers() {
 	examples.CountMembers(programId)
 
 	// examples.SendWelcomeEmail(memberId) ::: under maintenance :::
-
 	examples.UpdateMember_EmailAddress(memberId, tierId, programId)
 
 	// earn points (coming soon)
