@@ -1,7 +1,5 @@
 # passkit-golang-members-quickstart
 
-__Important Disclaimer:__ _This repository is currently under development. Below instructions are meant as a reference for beta partners, and could be subject to changes. Please note that the environment mentioned in below Quickstart is our Development Environment, which should not be used in a production setting; this is purely for exploratory testing. Data created in our Development Environment can be purged at anytime at our discretion without notice._
-
 The PassKit Golang SDK makes it quick and easy to create and install your branded membership passes for Apple Wallet and Google Pay.
 
 This repository has following structure with each purpose.
@@ -34,14 +32,14 @@ import(
 ## Prerequisites
 1. Create a PassKit account. Sign up for free [HERE](https://app.passkit.com/).
 
-2. Generate & Download your SDK credentials by clicking the 'GENERATE NEW SDK CREDENTIALS' button from the Developer Tools page in the [portal][https://app.passkit.com/app/account/developer-tools].
+2. Generate & Download your SDK credentials by clicking the 'GENERATE NEW SDK CREDENTIALS' button from the Developer Tools page in the [portal](https://app.passkit.com/app/account/developer-tools).
    
 ## Quickstart
 By completing this Quickstart, you will be able to issue a membership card for a new member.
 
 1. Ensure your followed the steps in [prerequisites](#prerequisites).
 
-2. Install passkit-io-go with:
+2. Install PassKit Golang SDK with:
    ```go
    go get -u github.com/PassKit/passkit-golang-sdk
    ```
