@@ -16,7 +16,7 @@ import (
 
 const (
 	// The address & port of the PassKit gRPC service.
-	gRPCHost = "grpc-dev.passkit.io"
+	gRPCHost = "grpc.pub1.passkit.io"
 	gRPCPort = "443"
 
 	// The location of your client certificates.
@@ -24,7 +24,7 @@ const (
 	clientKeyFile  = "certs/key.pem"         // [Required] Please store your key.pem at ./certs directory. Your private key you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login). You need to decrypt the key before use. Check README.md for details.
 	clientCAFile   = "certs/ca-chain.pem"    // [Required] Please store your ca-chain.pem at ./certs directory. The certificate chain you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login).
 
-	emailAddressToReceiveSamplePassUrl = "" // [Required] Please set your email address to receive digital card url by email.
+	emailAddressToReceiveSamplePassUrl = "patrick@passkit.com" // [Required] Please set your email address to receive digital card url by email.
 )
 
 // These variables will be used by EngageWithMembers methods.

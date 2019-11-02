@@ -2,8 +2,7 @@
 
 __Important Disclaimer:__ _This repository is currently under development. Below instructions are meant as a reference for beta partners, and could be subject to changes. Please note that the environment mentioned in below Quickstart is our Development Environment, which should not be used in a production setting; this is purely for exploratory testing. Data created in our Development Environment can be purged at anytime at our discretion without notice._
 
-The PassKit IO SDK makes it quick and easy to create and install your branded membership passes for Apple Wallet and Google Pay.
-
+The PassKit Golang SDK makes it quick and easy to create and install your branded membership passes for Apple Wallet and Google Pay.
 
 This repository has following structure with each purpose.
 - `certs` folder is a place to store your credential files.
@@ -33,11 +32,9 @@ import(
 )
 ```
 ## Prerequisites
-1. Create a PassKit account. Sign up for free [HERE](https://dev-app.passkit.io/).
+1. Create a PassKit account. Sign up for free [HERE](https://app.passkit.com/).
 
-2. Download three `.pem` files you received by email after sign up. 
-   
-   To re-generate credentials, visit Settings (click gear icon in top right of the PassKit.IO web app window) > Developer Credential page and click 'Generate' (Login [HERE](https://dev-app.passkit.io/)).
+2. Generate & Download your SDK credentials by clicking the 'GENERATE NEW SDK CREDENTIALS' button from the Developer Tools page in the [portal][https://app.passkit.com/app/account/developer-tools].
    
 ## Quickstart
 By completing this Quickstart, you will be able to issue a membership card for a new member.
@@ -49,7 +46,7 @@ By completing this Quickstart, you will be able to issue a membership card for a
    go get -u github.com/PassKit/passkit-golang-sdk
    ```
 
-3. When you created an account (Prerequisites #1), you should have received 3 files: `certificate.pem`, `key.pem` and `ca-chain.pem` by email. Please save those 3 files under `passkit-golang-members-quickstart/certs` directory. These .pem files are required to authenticate your accesss to PassKit.IO server.
+3. Place your SDK credential files (`certificate.pem`, `key.pem` and `ca-chain.pem`) in the certs folder in this repoo. The SDK uses these .pem files to authenticate against the PassKit server.
 
 4. Now we need to decrypt your `key.pem`. At your project root directory, run `cd ./certs openssl ec -in key.pem -out key.pem`. Your `key.pem` file should look like below.
    ![ScreenShot](https://raw.githubusercontent.com/PassKit/passkit-golang-members-quickstart/master/images/decrypted_key_pem.png)
@@ -68,10 +65,10 @@ Follow the steps of the [Quickstart](#quickstart) to create a sample membership 
 For example, you can update contents of digital membership card or send a push notification.
 
 ## GUI Tool
-GUI tool can be accessed from [your PassKit.IO account](https://dev-app.passkit.io/login).
+GUI tool can be accessed from [your PassKit account](https://app.passkit.com/login).
 
 ## Documentation
-* [PassKit.IO Membership Official Documentation](https://docs.passkit.io/protocols/member)
+* [PassKit Membership Official Documentation](https://docs.passkit.io/protocols/member)
 
 ## Check Other Passes
 * Coupons (coming soon)
