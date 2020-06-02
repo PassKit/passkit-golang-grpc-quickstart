@@ -27,7 +27,7 @@ func UpdateMember_EmailAddress(memberId, tierId, programId string) {
 		Id:        memberId,
 		TierId:    tierId,
 		ProgramId: programId,
-		MemberDetails: &io.Person{
+		Person: &io.Person{
 			Surname:      "Smith",
 			Forename:     "Bailey",
 			DisplayName:  "Bailey",

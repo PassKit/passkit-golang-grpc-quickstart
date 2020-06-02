@@ -26,7 +26,7 @@ func EnrolMember(programId, tierId, emailAddress string) string {
 	newMember := &members.Member{
 		TierId:    tierId,
 		ProgramId: programId,
-		MemberDetails: &io.Person{
+		Person: &io.Person{
 			Surname:      "Smith",
 			Forename:     "Bailey",
 			DisplayName:  "Bailey",
