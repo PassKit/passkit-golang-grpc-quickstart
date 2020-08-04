@@ -1,4 +1,4 @@
-# passkit-golang-members-quickstart
+# passkit-golang-members-grpc-quickstart
 
 The PassKit Golang SDK makes it quick and easy to create and install your branded membership passes for Apple Wallet and Google Pay.
 
