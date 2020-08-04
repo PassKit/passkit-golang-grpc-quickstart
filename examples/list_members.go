@@ -2,10 +2,10 @@ package examples
 
 import (
 	"fmt"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
+	goio "io"
 	"log"
-
-	"github.com/PassKit/passkit-golang-sdk/io"
-	"github.com/PassKit/passkit-golang-sdk/io/members"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -13,7 +13,7 @@ import (
 
 // ListMembers takes search conditions as pagination object and returns list of member records which match with the conditions.
 func ListMembers(programId string) {
-	fmt.Println("Getting a member record...")
+	fmt.Println("Listing members")
 
 	// Generate a members module client
 	pkMembersClient := members.NewMembersClient(conn)
@@ -24,10 +24,20 @@ func ListMembers(programId string) {
 
 	listRequest := &members.ListRequest{
 		ProgramId: programId,
-		Pagination: &io.Pagination{
-			FilterField:    []string{"programId"},
-			FilterValue:    []string{programId},
-			FilterOperator: []string{"eq"},
+		Filters: &io.Filters{
+			FilterGroups: []*io.FilterGroup{
+				{
+					Condition: io.Operator_AND,
+					FieldFilters: []*io.FieldFilter{
+						{
+							FilterField: "programId",
+							FilterValue: programId,
+							FilterOperator: "eq",
+						},
+					},
+				},
+			},
+			Limit: 5,
 		},
 	}
 
@@ -36,7 +46,16 @@ func ListMembers(programId string) {
 		log.Fatalf("List member err: %v", err)
 	}
 
-	membersList, err := res.Recv()
+	memberCount := 0
+	for {
+		m, err := res.Recv()
+		if err == goio.EOF {
+			break
+		}
 
-	fmt.Printf("You have successfully retrieved member list.\n%v\n", *membersList)
+		fmt.Printf("Listing member: %s\n", m.Id)
+		memberCount++
+	}
+
+	fmt.Printf("Listed a total of %d members\n", memberCount)
 }

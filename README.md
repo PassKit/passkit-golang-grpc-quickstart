@@ -25,8 +25,8 @@ go get -u github.com/PassKit/passkit-golang-sdk
 Then, import SDK with:
 ```go
 import(
-    "github.com/PassKit/passkit-golang-sdk/io/members"
-    "github.com/PassKit/passkit-golang-sdk/io"
+    "github.com/PassKit/passkit-golang-grpc-sdk/io/members"
+    "github.com/PassKit/passkit-golang-grpc-sdk/io"
 )
 ```
 ## Prerequisites

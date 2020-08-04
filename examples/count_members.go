@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/PassKit/passkit-golang-sdk/io"
-	"github.com/PassKit/passkit-golang-sdk/io/members"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -24,10 +24,19 @@ func CountMembers(programId string) {
 
 	listRequest := &members.ListRequest{
 		ProgramId: programId,
-		Pagination: &io.Pagination{
-			FilterField:    []string{"programId"},
-			FilterValue:    []string{programId},
-			FilterOperator: []string{"eq"},
+		Filters: &io.Filters{
+			FilterGroups: []*io.FilterGroup{
+				{
+					Condition: io.Operator_AND,
+					FieldFilters: []*io.FieldFilter{
+						{
+							FilterField: "programId",
+							FilterValue: programId,
+							FilterOperator: "eq",
+						},
+					},
+				},
+			},
 		},
 	}
 

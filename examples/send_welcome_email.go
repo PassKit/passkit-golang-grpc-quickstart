@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/PassKit/passkit-golang-sdk/io"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"

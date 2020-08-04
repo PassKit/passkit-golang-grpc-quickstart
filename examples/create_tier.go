@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/PassKit/passkit-golang-sdk/io"
-	"github.com/PassKit/passkit-golang-sdk/io/members"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -54,6 +54,7 @@ func CreateTier(programId string) string {
 		Id:             "base",
 		TierIndex:      uint32(1),
 		Name:           "Base Tier",
+		Timezone: "UTC",
 	}
 
 	tierId, err := pkMembersClient.CreateTier(ctx, tier)

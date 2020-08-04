@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"passkit-golang-members-quickstart/examples"
+	"passkit-golang-members-grpc-quickstart/examples"
 )
 
 /*
