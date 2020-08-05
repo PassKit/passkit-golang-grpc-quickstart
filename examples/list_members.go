@@ -53,6 +53,12 @@ func ListMembers(programId string) {
 			break
 		}
 
+		if err != nil {
+			fmt.Print("Error listing member: %s", err.Error())
+			res.CloseSend()
+			break
+		}
+
 		fmt.Printf("Listing member: %s\n", m.Id)
 		memberCount++
 	}
