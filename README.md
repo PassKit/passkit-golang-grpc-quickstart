@@ -44,7 +44,7 @@ By completing this Quickstart, you will be able to issue a membership card for a
    go get -u github.com/PassKit/passkit-golang-sdk
    ```
 
-3. Place your SDK credential files (`certificate.pem`, `key.pem` and `ca-chain.pem`) in the certs folder in this repoo. The SDK uses these .pem files to authenticate against the PassKit server.
+3. Place your SDK credential files (`certificate.pem`, `key.pem` and `ca-chain.pem`) in the certs folder in this repo. The SDK uses these .pem files to authenticate against the PassKit server.
 
 4. Now we need to decrypt your `key.pem`. At your project root directory, run `cd ./certs openssl ec -in key.pem -out key.pem`. Your `key.pem` file should look like below.
    ![ScreenShot](https://raw.githubusercontent.com/PassKit/passkit-golang-members-quickstart/master/images/decrypted_key_pem.png)
