@@ -1,7 +1,8 @@
-package examples
+package membership
 
 import (
 	"fmt"
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"log"
 
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
@@ -17,7 +18,7 @@ func CreateProgram() string {
 	fmt.Println("Start creating a membership program...")
 
 	// Generate PassKit Client object for Membership protocol.
-	pkMembersClient := members.NewMembersClient(conn)
+	pkMembersClient := members.NewMembersClient(shared.Conn)
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

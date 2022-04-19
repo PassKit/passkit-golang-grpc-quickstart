@@ -1,4 +1,4 @@
-package examples
+package membership
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -17,7 +18,7 @@ func EnrolMember(programId, tierId, emailAddress string) string {
 	fmt.Println("Start enrolling a member...")
 
 	// Generate a members module client
-	pkMembersClient := members.NewMembersClient(conn)
+	pkMembersClient := members.NewMembersClient(shared.Conn)
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -39,9 +40,8 @@ func EnrolMember(programId, tierId, emailAddress string) string {
 		log.Fatalf("Create tier err: %v", err)
 	}
 
-	// TODO: Change the pass url prefix to the production one
 	fmt.Printf("Enrol Member Success: You have successfully enrolled a member. Your member id is %s.\n", memberId.Id)
-	fmt.Printf("To check this member's membership card, please visit https://dev.pskt.io/%s\n", memberId.Id)
+	fmt.Printf("To check this member's membership card, please visit https://pub1.pskt.io/%s\n", memberId.Id)
 
 	return memberId.Id
 }
