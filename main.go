@@ -1,11 +1,12 @@
 package main
 
 import (
+	"log"
+
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/coupons"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/flights"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/membership"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
-	"log"
 )
 
 /*
@@ -26,7 +27,7 @@ const (
 	clientKeyFile  = "certs/key.pem"         // [Required] Please store your key.pem at ./certs directory. Your private key you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login). You need to decrypt the key before use. Check README.md for details.
 	clientCAFile   = "certs/ca-chain.pem"    // [Required] Please store your ca-chain.pem at ./certs directory. The certificate chain you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login).
 
-	emailAddressToReceiveSamplePassUrl = "claudia@passkit.com" // [Required] Please set your email address to receive digital card url by email.
+	emailAddressToReceiveSamplePassUrl = "YOUR_EMAIL_ADDRESS@EMAIL.COM" // [Required] Please set your email address to receive digital card url by email.
 )
 
 // These variables will be used by EngageWithMembers methods.
@@ -45,23 +46,28 @@ func main() {
 	}
 
 	ConnectWithPasskitServer()
-// Membership functions
+	// Membership functions
 	//IssueMembershipCard()
 	//EngageWithMembers()
 
-// Coupon functions
-	IssueCoupon()
-	EngageWithCoupons()
+	// Coupon functions
+	//IssueCoupon()
+	//EngageWithCoupons()
 
-// Flight functions
-  	//IssueBoardingPass()
-	//EngageWithBoardingPass()
+	// Flight functions
+	IssueBoardingPass()
+	EngageWithBoardingPass()
 }
 
 // In order to use PassKit SDK, you need to establish the connection to the PassKit server first.
 func ConnectWithPasskitServer() {
 	shared.ConnectPasskitSdk(clientCertFile, clientKeyFile, clientCAFile, gRPCHost, gRPCPort)
 }
+
+// Each method has the minimum information needed to execute the method, if you
+// would like to add more details please refer to
+// https://docs.passkit.io/protocols/member/
+// for fields that can be added.
 
 // IssueMembershipCard shows the methods needed to issue a membership card
 // In order to create a membership card for your member, you need to take following process:
@@ -103,12 +109,17 @@ func EngageWithMembers() {
 
 }
 
+// Each method has the minimum information needed to execute the method, if
+// you would like to add more details please refer to
+// https://docs.passkit.io/protocols/coupon/
+//for fields that can be added.
+
 // IssueCoupon shows the methods needed to issue a coupon
 // In order to create a coupon, you need to take following process:
 // 1. Create a campaign
 // 2. Create an offer
 // 3. Enrol someone on a couppn (enrolling someone will automatically issue a coupon card to your customer).
-func IssueCoupon(){
+func IssueCoupon() {
 	newCampaignId := coupons.CreateCampaign()
 	newOfferId := coupons.CreateOffer(newCampaignId)
 	newCouponId := coupons.CreateCoupon(newCampaignId, newOfferId, emailAddressToReceiveSamplePassUrl)
@@ -135,9 +146,14 @@ func EngageWithCoupons() {
 
 	coupons.VoidCoupon(campaignId, offerId, couponId)
 
-	coupons.DeleteCouponOffer(offerId)
+	coupons.DeleteCouponOffer(campaignId)
 
 }
+
+// Each method has the minimum information needed to execute the method, if you
+// would like to add more details please refer to
+// https://docs.passkit.io/protocols/boarding/
+// for fields that can be added.
 
 // IssueBoardingPass shows the methods needed to issue a boarding pass
 // In order to create a boarding pass, you need to take following process:
@@ -147,7 +163,7 @@ func EngageWithCoupons() {
 // 4. Create a flight
 // 5. Create flight designator
 // 6. Enrol someone on a boarding pass (enrolling someone will automatically issue a boarding pass to your customer).
-func IssueBoardingPass(){
+func IssueBoardingPass() {
 	newTemplateId := flights.CreateTemplate()
 
 	flights.CreateCarrier()
@@ -164,10 +180,11 @@ func IssueBoardingPass(){
 	templateId = newTemplateId
 
 }
+
 // EngageWithBoardingPass show methods you can use to engage with boarding passes.
 // When you execute EngageWithBoardingPass method by itself, please establish connection with the server first by using
 // ConnectWithPasskitServer
-func EngageWithBoardingPass(){
+func EngageWithBoardingPass() {
 	flights.DeleteFlight()
 
 	flights.DeleteFlightDesignator()

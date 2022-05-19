@@ -2,17 +2,18 @@ package coupons
 
 import (
 	"fmt"
+	"log"
+
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
-	"log"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
 )
 
 // DeleteCouponOffer takes the offerId to delete an existing offer.
-func DeleteCouponOffer( offerId string) {
+func DeleteCouponOffer(campaignId string) {
 	fmt.Println("Start deleting a coupon offer...")
 
 	// Generate a coupons module client
@@ -23,11 +24,11 @@ func DeleteCouponOffer( offerId string) {
 	ctx = metadata.NewOutgoingContext(ctx, nil)
 
 	// Generates offer to delete
-	offer := &io.Id{
-		Id: offerId,
+	campaign := &io.Id{
+		Id: campaignId,
 	}
 
-	_, err := pkCouponsClient.DeleteCouponOffer(ctx, offer)
+	_, err := pkCouponsClient.DeleteCouponCampaign(ctx, campaign)
 	if err != nil {
 		log.Fatalf("Delete coupon offer err: %v", err)
 	}
