@@ -2,10 +2,9 @@ package flights
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 	"log"
-
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -28,7 +27,7 @@ func DeleteCarrier(){
 		CarrierCode: "YY",
 	}
 
-	// Send gRPC request to create an airport.
+	// Send gRPC request to delete a carrier.
 	_, err := pkFlightsClient.DeleteCarrier(ctx, carrierCode)
 	if err != nil {
 		log.Fatalf("Delete carrier err: %v", err)

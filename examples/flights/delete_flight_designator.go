@@ -2,10 +2,9 @@ package flights
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 	"log"
-
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -23,17 +22,19 @@ func DeleteFlightDesignator(){
 	ctx := context.Background()
 	ctx = metadata.NewOutgoingContext(ctx, nil)
 
-	// Create your existing flight.
-	carrierCode := &flights.CarrierCode{
+	// Create your existing flight designator.
+	flightDesignator := &flights.FlightDesignatorRequest{
 		CarrierCode: "YY",
+		FlightNumber: "YY123",
+		Revision: 0,
 	}
 
-	// Send gRPC request to create an airport.
-	_, err := pkFlightsClient.DeleteCarrier(ctx, carrierCode)
+	// Send gRPC request to delete flight designator.
+	_, err := pkFlightsClient.DeleteFlightDesignator(ctx, flightDesignator)
 	if err != nil {
 		log.Fatalf("Delete carrier err: %v", err)
 	}
 
-	log.Printf("Delete Carrier Success: You have successfully deleted a carrier.\n")
+	log.Printf("Delete Flight Designator Success: You have successfully deleted the flight designator.\n")
 
 }
