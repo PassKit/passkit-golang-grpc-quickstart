@@ -109,6 +109,7 @@ In `IssueBoardingPass()` the methods are:
 - CreateBoardingPass() - takes templateId, from previous method, and customer details creates a new boarding pass, and sends a welcome email to deliver boarding pass url
 
 After running `go run main.go` the terminal should show:
+![ScreenShot](images/issue-boarding-pass.png)
 
 
 #### Engage With Boarding Passes.
@@ -119,6 +120,7 @@ After running `go run main.go` the terminal should show:
 - DeleteCarrier() - takes an existing carrier code and deletes the carrier associated with it
 
 After running `go run main.go` the terminal should show:
+![ScreenShot](images/engage-with-boarding-pass.png)
 
 ## GUI Tool
 GUI tool can be accessed from [your PassKit account](https://app.passkit.com/login).
