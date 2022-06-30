@@ -14,7 +14,7 @@ You will need the following:
 - Your PassKit SDK Credentials (available from the [Developer Tools Page](https://app.passkit.com/app/account/developer-tools))
 - Apple wallet certificate id (for flights only, available from the [certificate page](https://app.passkit.com/app/account/certificates))
  ![ScreenShot](images/certificate.png)
-- [Golang](https://go.dev/dl/) (Guide to [installation](https://go.dev/doc/install))
+- Recommended code editor [Golang](https://go.dev/dl/) (Guide to [installation](https://go.dev/doc/install))
 
 ### Configuration
 
@@ -29,7 +29,7 @@ It should output something similar to below:
     
     You can disregard the key-java.pem credentials file as it is not compatible with Golang.
 
-3. Now we need to decrypt your `key.pem`. At your project root directory, run `cd ./certs`  `openssl ec -in key.pem -out key.pem`.
+3. Now we need to decrypt your `key.pem`. At your project root directory in the terminal, run `cd ./certs`  `openssl ec -in key.pem -out key.pem`. If you are in your root directory the terminal should show `PASSKIT-GOLANG-GRPC-QUICKSTART` to the left of the cursor and then after running the command `certs`, as shown below.
 ![ScreenShot](images/decrypt-key.png)
 For the password use the one-time password that you used for generating the SDK credentials.
 
@@ -40,12 +40,12 @@ Your `key.pem` file should look like below.
 4. Replace `YOUR_EMAIL_ADDRESS@EMAIL.COM` in `main.go` on line 29 with your email address in order to receive the welcome email with card url which your member will also receive.
 ![ScreenShot](images/email.png)
 
-5. Go back to root directory with cd ../... Then run `go mod tidy` , then `go run main.go` to create a sample membership card, coupon card and boarding pass (with default templates & tiers/offers) and issue them.
+5. Go back to root directory with `cd ../`. Then run `go mod tidy` , then `go run main.go` to create a sample membership card, coupon card and boarding pass (with default templates & tiers/offers) and issue them. If you are in your root directory the terminal should show `PASSKIT-GOLANG-GRPC-QUICKSTART` to the left of the cursor.
 
 ## Examples
 ###  Membership Cards
 #### Issue A Membership Card.
-Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
+Follow the steps of the configuration to get the quickstart up and running.
 In `IssueMembershipCard()` the methods there are:
 - CreateProgram() - takes a new program name and creates a new program
 - CreateTier() -  takes the programId of the program just created in the above program, creates a new template (based of default template), creates a tier, and links this tier to the program
@@ -70,7 +70,7 @@ After running `go run main.go` the terminal should show:
 
 ###  Coupons
 #### Issue A Coupon.
-Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
+Follow the steps of the configuration to get the quickstart up and running.
 In `IssueCoupon()` the methods are:
 - CreateCampaign() - takes a new campaign name and creates a new campaign
 - CreateOffer() - takes a campaignId of the campaign you just created and creates a new template (based of default template), creates an offer, and links this offer to the campaign
@@ -94,7 +94,7 @@ After running `go run main.go` the terminal should show:
 
 ### Boarding Passes
 #### Issue A Boarding Pass.
-Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
+Follow the steps of the configuration to get the quickstart up and running.
 In `IssueBoardingPass()` the methods are:
 - CreateTemplate() - creates the pass template for flights and boarding passes
 - CreateCarrier() - takes a new carrier code and creates a new carrier
@@ -127,7 +127,6 @@ GUI tool can be accessed from [your PassKit account](https://app.passkit.com/log
 
 
 ## Getting Help
-* Email [support@passkit.com](email:support@passkit.com)
 * [Online chat support](https://passkit.com/)
 
 ## License
