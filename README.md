@@ -18,7 +18,7 @@ You will need the following:
 
 ### Configuration
 
-1. Install PassKit Golang SDK in the terminal with `go get -u github.com/PassKit/passkit-golang-grpc-sdk` 
+1. Install PassKit Golang SDK in the terminal with `go install github.com/PassKit/passkit-golang-grpc-sdk` 
 It should output something similar to below:
 ![ScreenShot](images/go-get-commands.png)
 
