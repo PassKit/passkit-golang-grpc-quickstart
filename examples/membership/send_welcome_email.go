@@ -1,10 +1,11 @@
-package examples
+package membership
 
 import (
 	"fmt"
 	"log"
 
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -16,7 +17,7 @@ func SendWelcomeEmail(memberId string) {
 	fmt.Println("Sending a welcome email...")
 
 	// Generate a distribution module client
-	pkDistributionClient := io.NewDistributionClient(conn)
+	pkDistributionClient := io.NewDistributionClient(shared.Conn)
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

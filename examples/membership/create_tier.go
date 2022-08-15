@@ -1,4 +1,4 @@
-package examples
+package membership
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -17,7 +18,7 @@ func CreateTier(programId string) string {
 	fmt.Println("Start creating a membership tier...")
 
 	// Generate a template module client
-	pkTemplatesClient := io.NewTemplatesClient(conn)
+	pkTemplatesClient := io.NewTemplatesClient(shared.Conn)
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -46,7 +47,7 @@ func CreateTier(programId string) string {
 
 	// We now have a program id which we created in create_program.go example and default pass template.
 	// Let's create a tier. First, let's create a members module client.
-	pkMembersClient := members.NewMembersClient(conn)
+	pkMembersClient := members.NewMembersClient(shared.Conn)
 
 	tier := &members.Tier{
 		ProgramId:      programId,
