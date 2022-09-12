@@ -40,7 +40,10 @@ Your `key.pem` file should look like below.
 4. Replace `YOUR_EMAIL_ADDRESS@EMAIL.COM` in `main.go` on line 29 with your email address in order to receive the welcome email with card url which your member will also receive.
 ![ScreenShot](images/email.png)
 
-5. Go back to root directory with `cd ../`. Then run `go mod tidy` , then `go run main.go` to create a sample membership card, coupon card and boarding pass (with default templates & tiers/offers) and issue them. If you are in your root directory the terminal should show `PASSKIT-GOLANG-GRPC-QUICKSTART` to the left of the cursor.
+5. Go back to root directory with cd ../ Then run go mod tidy , then go run main.go to create a sample membership card, coupon card and boarding pass (with default templates & tiers/offers) and issue them.
+
+6. If you are issuing boarding passes set PassTypeIdentifier on line 30 in create_carrier.go in the flights folder to your Apple Certificate Pass Type Id as shown in the prerequisites.
+![ScreenShot](images/apple-certificate.png) 
 
 ## Examples
 ###  Membership Cards
