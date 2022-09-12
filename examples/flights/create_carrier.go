@@ -2,9 +2,10 @@ package flights
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"log"
+
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -12,7 +13,7 @@ import (
 
 // CreateCarrier takes a new carrier code and creates a new carrier.
 //If the carrier already exists it cannot be created.
-func CreateCarrier(){
+func CreateCarrier() {
 	fmt.Println("Start creating a carrier...")
 
 	// Generate PassKit Client object for Flights protocol.
@@ -24,9 +25,9 @@ func CreateCarrier(){
 
 	// Create your carrier.
 	carrier := &flights.Carrier{
-		IataCarrierCode: "YY",
-		AirlineName: "Insert Airline Name",
-		//PassTypeIdentifier: "pass.pass.com.jesse.test",
+		IataCarrierCode:    "YY",
+		AirlineName:        "Insert Airline Name",
+		PassTypeIdentifier: "", //Change to your apple certificate
 	}
 
 	// Send gRPC request to create a carrier.

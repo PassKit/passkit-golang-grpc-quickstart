@@ -47,12 +47,12 @@ func main() {
 
 	ConnectWithPasskitServer()
 	// Membership functions
-	//IssueMembershipCard()
-	//EngageWithMembers()
+	IssueMembershipCard()
+	EngageWithMembers()
 
 	// Coupon functions
-	//IssueCoupon()
-	//EngageWithCoupons()
+	IssueCoupon()
+	EngageWithCoupons()
 
 	// Flight functions
 	IssueBoardingPass()
