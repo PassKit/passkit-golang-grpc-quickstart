@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/coupons"
+	event_tickets "github.com/PassKit/passkit-golang-grpc-quickstart/examples/event-tickets"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/flights"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/membership"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
@@ -39,6 +40,11 @@ var offerId string
 var couponId string
 var boardingPassId string
 var templateId string
+var productionId string
+var venueId string
+var ticketTypeId string
+var ticketId string
+var eventId string
 
 func main() {
 	if emailAddressToReceiveSamplePassUrl == "" {
@@ -57,6 +63,10 @@ func main() {
 	// Flight functions
 	IssueBoardingPass()
 	EngageWithBoardingPass()
+
+	// Event ticket functions
+	IssueEventTicket()
+	EngageWithEventTicket()
 }
 
 // In order to use PassKit SDK, you need to establish the connection to the PassKit server first.
@@ -195,4 +205,48 @@ func EngageWithBoardingPass() {
 	flights.DeleteAirport("ADP")
 
 	flights.DeleteCarrier()
+}
+
+// Each method has the minimum information needed to execute the method, if you
+// would like to add more details please refer to
+// https://docs.passkit.io/protocols/event-tickets/
+// for fields that can be added.
+
+// IssueEventTicket shows the methods needed to issue an event ticket
+// In order to create an event ticket, you need to take following process:
+// 1. Create a venue
+// 2. Create a production
+// 3. Create event ticket template
+// 4. Create a event ticket type
+// 5. Issue an event ticket
+func IssueEventTicket() {
+
+	newTemplateId := event_tickets.CreateTemplate()
+
+	newProductionId := event_tickets.CreateProduction()
+
+	newVenueId := event_tickets.CreateVenue()
+
+	newTicketTypeId := event_tickets.CreateTicketType(newProductionId, newTemplateId)
+
+	newEventId := event_tickets.CreateEvent(newVenueId, newProductionId)
+
+	newTicketId := event_tickets.IssueEventTicket(newTicketTypeId, newProductionId, newEventId)
+
+	venueId = newVenueId
+
+	productionId = newProductionId
+
+	ticketTypeId = newTicketTypeId
+
+	ticketId = newTicketId
+
+}
+
+// EngageWithEventTicket show methods you can use to engage with event tickets.
+// When you execute EngageWithEventTicket method by itself, please establish connection with the server first by using
+// ConnectWithPasskitServer
+func EngageWithEventTicket() {
+	event_tickets.ValidateTicket(ticketId)
+	event_tickets.RedeemTicket(ticketId)
 }

@@ -117,6 +117,28 @@ After running `go run main.go` the terminal should show:
 After running `go run main.go` the terminal should show:
 ![ScreenShot](images/engage-with-boarding-passes.png)
 
+### Event Tickets
+#### Issue An Event Ticket.
+Follow the steps of the configuration to get the quickstart up and running.
+In `IssueEventTicket()` the methods are:
+- CreateTemplate() - creates the pass template for event tickets
+- CreateVenue() - creates a venue for the event 
+- CreateProduction() - takes a new production name and creates a new production
+- CreateTicketType() - takes templateId , from previous method, to use as base template and the productionId, created from previous method, and creates a new ticketType 
+- CreateEvent() - takes productionId and venueId ,from previous method, and creates a new Event
+- IssueEventTicket() - takes ticketTypeId and  eventId, from previous method, and customer details creates a event ticket, and sends a welcome email to deliver event ticket url
+
+After running `go run main.go` the terminal should show:
+![ScreenShot](images/issue-event-ticket.png)
+
+#### Engage With Event Ticket.
+`EngageWithEventTicket()` contains multiple methods you can use to engage with event tickets. They use the information from `IssueEventTicket()` to run the methods unless informatin is manually entered.
+- ValidateTicket() - takes an existing ticket number as well as other details and validates it
+- RedeeemTicket() - takes an existing ticket number and redeems the event ticket associate with it
+
+After running `go run main.go` the terminal should show:
+![ScreenShot](images/engage-with-event-tickets.png)
+
 ## GUI Tool
 GUI tool can be accessed from [your PassKit account](https://app.passkit.com/login).
 
@@ -124,6 +146,7 @@ GUI tool can be accessed from [your PassKit account](https://app.passkit.com/log
 * [PassKit Membership Official Documentation](https://docs.passkit.io/protocols/member)
 * [PassKit Coupons Official Documentation](https://docs.passkit.io/protocols/coupon)
 * [PassKit Boarding Passes Official Documentation](https://docs.passkit.io/protocols/boarding)
+* [PassKit Event Tickets Official Documentation](https://docs.passkit.io/protocols/event-tickets/)
 
 
 ## Getting Help
