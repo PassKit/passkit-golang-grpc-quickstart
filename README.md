@@ -40,7 +40,9 @@ Your `key.pem` file should look like below.
 4. Replace `YOUR_EMAIL_ADDRESS@EMAIL.COM` in `main.go` on line 29 with your email address in order to receive the welcome email with card url which your member will also receive.
 ![ScreenShot](images/email.png)
 
-5. Go back to root directory with `cd ../`. Then run `go mod tidy` , then `go run main.go` to create a sample membership card, coupon card and boarding pass (with default templates & tiers/offers) and issue them. If you are in your root directory the terminal should show `PASSKIT-GOLANG-GRPC-QUICKSTART` to the left of the cursor.
+5. Check the API region of your account [here](https://app.passkit.com/app/account/developer-tools) and change it accordingly, for Europe/Pub1 use `gRPCHost = "grpc.pub1.passkit.io"` and for USA/Pub2 use `gRPCHost = "grpc.pub2.passkit.io"`.
+
+6. Go back to root directory with `cd ../`. Then run `go mod tidy` , then `go run main.go` to create a sample membership card, coupon card and boarding pass (with default templates & tiers/offers) and issue them. If you are in your root directory the terminal should show `PASSKIT-GOLANG-GRPC-QUICKSTART` to the left of the cursor.
 
 ## Examples
 ###  Membership Cards
