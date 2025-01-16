@@ -3,7 +3,7 @@ module github.com/PassKit/passkit-golang-grpc-quickstart
 go 1.17
 
 require (
-	github.com/PassKit/passkit-golang-grpc-sdk v1.1.62
+	github.com/PassKit/passkit-golang-grpc-sdk v1.1.97
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.0 // indirect
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
