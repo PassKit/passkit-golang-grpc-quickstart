@@ -1,15 +1,19 @@
 module github.com/PassKit/passkit-golang-grpc-quickstart
 
-go 1.17
+go 1.23.0
+
+toolchain go1.23.6
 
 require (
-	github.com/PassKit/passkit-golang-grpc-sdk v1.1.97
-	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.0 // indirect
-	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
-	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
-	golang.org/x/text v0.3.7 // indirect
+	github.com/PassKit/passkit-golang-grpc-sdk v1.1.123
+	golang.org/x/net v0.35.0
+	google.golang.org/grpc v1.70.0
+	google.golang.org/protobuf v1.36.5
+)
+
+require (
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.1 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	google.golang.org/genproto v0.0.0-20220322021311-435b647f9ef2 // indirect
-	google.golang.org/grpc v1.45.0
-	google.golang.org/protobuf v1.28.0
 )

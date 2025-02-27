@@ -2,8 +2,9 @@ package membership
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"log"
+
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"

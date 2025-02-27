@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -23,6 +23,8 @@ func EnrolMember(programId, tierId, emailAddress string) string {
 	// Generate context object to connect to the server.
 	ctx := context.Background()
 	ctx = metadata.NewOutgoingContext(ctx, nil)
+	theMetaData := make(map[string]string)
+	theMetaData["testing"] = "sdg"
 
 	newMember := &members.Member{
 		TierId:    tierId,
@@ -33,8 +35,8 @@ func EnrolMember(programId, tierId, emailAddress string) string {
 			DisplayName:  "Bailey",
 			EmailAddress: emailAddress,
 		},
+		MetaData: theMetaData,
 	}
-
 	memberId, err := pkMembersClient.EnrolMember(ctx, newMember)
 	if err != nil {
 		log.Fatalf("Create tier err: %v", err)

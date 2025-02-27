@@ -61,17 +61,23 @@ func main() {
 	EngageWithCoupons()
 
 	// Flight functions
-	IssueBoardingPass()
-	EngageWithBoardingPass()
+	//IssueBoardingPass()
+	//EngageWithBoardingPass()
 
 	// Event ticket functions
 	IssueEventTicket()
 	EngageWithEventTicket()
+
+	shared.ShutdownGRPCPool()
 }
 
 // In order to use PassKit SDK, you need to establish the connection to the PassKit server first.
 func ConnectWithPasskitServer() {
+	// Regular gRpc Connection
 	shared.ConnectPasskitSdk(clientCertFile, clientKeyFile, clientCAFile, gRPCHost, gRPCPort)
+	// gRpc Connection Pooling need to swap shared.Conn to shared.GetConnectionPooling() in the example methods
+	shared.InitializeGRPCPool(clientCertFile, clientKeyFile, clientCAFile, gRPCHost, gRPCPort)
+
 }
 
 // Each method has the minimum information needed to execute the method, if you
