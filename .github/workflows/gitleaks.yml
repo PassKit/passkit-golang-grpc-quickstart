@@ -1,0 +1,27 @@
+name: Gitleaks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    env:
+      GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v3
+        if: env.GITLEAKS_LICENSE != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Explain skipped licensed scan
+        if: env.GITLEAKS_LICENSE == ''
+        run: echo "Gitleaks scan skipped because GITLEAKS_LICENSE is unavailable (for example, on a Dependabot pull request)."

@@ -2,9 +2,9 @@ package coupons
 
 import (
 	"fmt"
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"log"
 	"time"
@@ -19,7 +19,7 @@ func CreateOffer(campaignId string) string {
 	fmt.Println("Start creating an offer...")
 
 	// Generate a template module client
-	pkTemplatesClient := io.NewTemplatesClient(shared.Conn)
+	pkTemplatesClient := io.NewTemplatesClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -48,18 +48,18 @@ func CreateOffer(campaignId string) string {
 
 	// We now have a campaign id which we created in create_campaign.go example and default pass template.
 	// Let's create an offer. First, let's create a coupons module client.
-	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.Conn)
+	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.GetGRPCConnection())
 
 	// Generates offer with required fields, more fields can be added, refer to docs.passkit.io and select Coupons for the full list
 	offer := &single_use_coupons.CouponOffer{
-		CampaignId: campaignId,
+		CampaignId:                 campaignId,
 		BeforeRedeemPassTemplateId: templateId.Id,
-		Id:             "base",
-		OfferTitle: "Base Offer",
-		OfferShortTitle: "Base Offer",
-		OfferDetails: "Base offer",
-		IssueStartDate: timestamppb.Now(),
-		IssueEndDate: timestamppb.New(time.Now().AddDate(0,0,1)),
+		Id:                         "base",
+		OfferTitle:                 "Base Offer",
+		OfferShortTitle:            "Base Offer",
+		OfferDetails:               "Base offer",
+		IssueStartDate:             timestamppb.Now(),
+		IssueEndDate:               timestamppb.New(time.Now().AddDate(0, 0, 1)),
 	}
 
 	offerId, err := pkCouponsClient.CreateCouponOffer(ctx, offer)

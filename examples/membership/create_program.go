@@ -19,7 +19,7 @@ func CreateProgram() string {
 	fmt.Println("Start creating a membership program...")
 
 	// Generate PassKit Client object for Membership protocol.
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

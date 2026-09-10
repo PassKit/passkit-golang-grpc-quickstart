@@ -17,7 +17,7 @@ func CountMembers(programId, tierId string) {
 	fmt.Println("Counting member records match with conditions...")
 
 	// Generate a members module client
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -32,8 +32,8 @@ func CountMembers(programId, tierId string) {
 					Condition: io.Operator_AND,
 					FieldFilters: []*io.FieldFilter{
 						{
-							FilterField: "tierId",
-							FilterValue: tierId,
+							FilterField:    "tierId",
+							FilterValue:    tierId,
 							FilterOperator: "eq",
 						},
 					},

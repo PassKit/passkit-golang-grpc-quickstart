@@ -2,8 +2,8 @@ package flights
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 	"log"
 
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
@@ -18,20 +18,22 @@ func CreateBoardingPass(templateId, emailAddress string) string {
 	fmt.Println("Start creating a boarding pass...")
 
 	// Generate a flights module client
-	pkFlightsClient := flights.NewFlightsClient(shared.Conn)
+	pkFlightsClient := flights.NewFlightsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
 	ctx = metadata.NewOutgoingContext(ctx, nil)
 
 	boardingPass := &flights.BoardingPassRecord{
-		CarrierCode:         "YY",
-		BoardingPoint:       "YYY",
-		DeplaningPoint:      "LHR",
-		OperatingCarrierPNR: "",
-		FlightNumber:        "12345",
-		DepartureDate:       &io.Date{Year: 2022, Month: 03, Day: 28},
+		CarrierCode:         CarrierCode,
+		BoardingPoint:       Origin,
+		DeplaningPoint:      Destination,
+		OperatingCarrierPNR: OperatingCarrierPNR,
+		FlightNumber:        FlightNumber,
+		DepartureDate:       DepartureDate,
 		SequenceNumber:      2,
+		SeatNumber:          "12A",
+		Class:               "Economy",
 		Passenger: &flights.Passenger{
 			PassengerDetails: &io.Person{
 				Surname:      "Smith",

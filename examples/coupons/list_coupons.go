@@ -16,7 +16,7 @@ func ListCoupons(campaignId string) {
 	fmt.Println("Listing coupons")
 
 	// Generate a coupons module client
-	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.Conn)
+	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -25,7 +25,6 @@ func ListCoupons(campaignId string) {
 	// Generates list request
 	listRequest := &single_use_coupons.ListRequest{
 		CouponCampaignId: campaignId,
-
 	}
 
 	res, err := pkCouponsClient.ListCouponsByCouponCampaign(ctx, listRequest)
@@ -41,7 +40,7 @@ func ListCoupons(campaignId string) {
 		}
 
 		if err != nil {
-			fmt.Print("Error listing coupons: %s", err.Error())
+			fmt.Printf("Error listing coupons: %s", err.Error())
 			res.CloseSend()
 			break
 		}

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -16,14 +16,14 @@ func DeleteMember(programId, tierId, memberId string) {
 	fmt.Println("Start deleting a member...")
 
 	// Generate a members module client
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
 	ctx = metadata.NewOutgoingContext(ctx, nil)
 
 	member := &members.Member{
-		Id: memberId,
+		Id:        memberId,
 		TierId:    tierId,
 		ProgramId: programId,
 	}

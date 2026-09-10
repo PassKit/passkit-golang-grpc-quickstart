@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -18,7 +18,7 @@ func UpdateMember_EmailAddress(memberId, tierId, programId string) {
 	fmt.Println("Updating member's email address...")
 
 	// Generate a members module client
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

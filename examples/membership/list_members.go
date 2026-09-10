@@ -2,9 +2,9 @@ package membership
 
 import (
 	"fmt"
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	goio "io"
 	"log"
 
@@ -17,7 +17,7 @@ func ListMembers(programId string) {
 	fmt.Println("Listing members")
 
 	// Generate a members module client
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -31,8 +31,8 @@ func ListMembers(programId string) {
 					Condition: io.Operator_AND,
 					FieldFilters: []*io.FieldFilter{
 						{
-							FilterField: "programId",
-							FilterValue: programId,
+							FilterField:    "programId",
+							FilterValue:    programId,
 							FilterOperator: "eq",
 						},
 					},
@@ -55,7 +55,7 @@ func ListMembers(programId string) {
 		}
 
 		if err != nil {
-			fmt.Print("Error listing member: %s", err.Error())
+			fmt.Printf("Error listing member: %s", err.Error())
 			res.CloseSend()
 			break
 		}

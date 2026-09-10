@@ -16,7 +16,7 @@ func CreateTicketType(productionId string, templateId string) string {
 	fmt.Println("Start creating a ticket type")
 
 	// Generate PassKit Client object for Event Tickets protocol.
-	pkEventsClient := event_tickets.NewEventTicketsClient(shared.Conn)
+	pkEventsClient := event_tickets.NewEventTicketsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

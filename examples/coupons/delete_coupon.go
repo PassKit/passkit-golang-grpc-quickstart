@@ -2,8 +2,8 @@ package coupons
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
 	"log"
 
 	"golang.org/x/net/context"
@@ -11,11 +11,11 @@ import (
 )
 
 // VoidCoupon takes the couponId, offerId and campaignId to void an existing coupon.
-func VoidCoupon( campaignId, offerId, couponId string) {
+func VoidCoupon(campaignId, offerId, couponId string) {
 	fmt.Println("Start voiding a coupon...")
 
 	// Generate a coupons module client
-	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.Conn)
+	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -23,8 +23,8 @@ func VoidCoupon( campaignId, offerId, couponId string) {
 
 	// Generates coupon to delete
 	coupon := &single_use_coupons.Coupon{
-		Id: couponId,
-		OfferId: offerId,
+		Id:         couponId,
+		OfferId:    offerId,
 		CampaignId: campaignId,
 	}
 

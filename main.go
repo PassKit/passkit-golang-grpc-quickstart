@@ -1,35 +1,24 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
+	"strings"
+	"time"
 
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/coupons"
 	event_tickets "github.com/PassKit/passkit-golang-grpc-quickstart/examples/event-tickets"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/flights"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/membership"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-quickstart/internal/config"
+	"github.com/PassKit/passkit-golang-grpc-quickstart/internal/passkit"
+	"google.golang.org/grpc"
 )
 
-/*
-	Prerequisites to run this file:
-		- store your certificate.pem in passkit-golang-members-quickstart/certs/ directory
-		- store your key.pem in passkit-golang-members-quickstart/certs/ directory
-		- store your ca-chain.pem in passkit-golang-members-quickstart/certs/ directory
-		- decrypt your key.pem with `cd ./certs openssl ec -in key.pem -out key.pem` from project root
-*/
-
-const (
-	// The address & port of the PassKit gRPC service.
-	gRPCHost = "grpc.pub1.passkit.io"
-	gRPCPort = "443"
-
-	// The location of your client certificates.
-	clientCertFile = "certs/certificate.pem" // [Required] Please store your certificate.pem at ./certs directory. Your client certificate you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login).
-	clientKeyFile  = "certs/key.pem"         // [Required] Please store your key.pem at ./certs directory. Your private key you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login). You need to decrypt the key before use. Check README.md for details.
-	clientCAFile   = "certs/ca-chain.pem"    // [Required] Please store your ca-chain.pem at ./certs directory. The certificate chain you receive by email or on Settings > Developer Credential page (https://dev-app.passkit.io/login).
-
-	emailAddressToReceiveSamplePassUrl = "YOUR_EMAIL_ADDRESS@EMAIL.COM" // [Required] Please set your email address to receive digital card url by email.
-)
+var emailAddressToReceiveSamplePassUrl string
+var cleanupDelay time.Duration
 
 // These variables will be used by EngageWithMembers methods.
 var programId string
@@ -47,37 +36,69 @@ var ticketId string
 var eventId string
 
 func main() {
-	if emailAddressToReceiveSamplePassUrl == "" {
-		log.Fatal("Please set emailAddressToReceiveSamplePassUrl with your email address in coupons.go so that you can receive sample welcome email with digital card url.")
+	if len(os.Args) != 2 || os.Args[1] == "help" || os.Args[1] == "--help" {
+		fmt.Println("Usage: go run . <membership|coupons|event-tickets|flights>")
+		fmt.Println("Copy .env.example to .env and add your PassKit credentials first.")
+		return
 	}
+	workflow := strings.ToLower(os.Args[1])
+	if workflow == "loyalty" {
+		workflow = "membership"
+	}
+	if workflow == "events" {
+		workflow = "event-tickets"
+	}
+	if workflow != "membership" && workflow != "coupons" && workflow != "event-tickets" && workflow != "flights" {
+		log.Fatalf("unknown workflow %q; use membership, coupons, event-tickets, or flights", os.Args[1])
+	}
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := cfg.Validate(workflow); err != nil {
+		log.Fatal(err)
+	}
+	if err := shared.SetGRPCPoolSize(cfg.PoolSize); err != nil {
+		log.Fatal(err)
+	}
+	shared.InitializeGRPCPool(cfg.Certificate, cfg.Key, cfg.CAChain, cfg.Host, cfg.Port)
+	defer shared.ShutdownGRPCPool()
+	if _, err := passkit.New(func() grpc.ClientConnInterface { return shared.GetGRPCConnection() }, false); err != nil {
+		log.Fatal(err)
+	}
+	cleanupDelay = time.Duration(cfg.CleanupDelaySeconds) * time.Second
 
-	ConnectWithPasskitServer()
-	// Membership functions
-	IssueMembershipCard()
-	EngageWithMembers()
-
-	// Coupon functions
-	IssueCoupon()
-	EngageWithCoupons()
-
-	// Flight functions
-	//IssueBoardingPass()
-	//EngageWithBoardingPass()
-
-	// Event ticket functions
-	IssueEventTicket()
-	EngageWithEventTicket()
-
-	shared.ShutdownGRPCPool()
+	switch workflow {
+	case "membership":
+		emailAddressToReceiveSamplePassUrl = cfg.Email
+		IssueMembershipCard()
+		pauseBeforeFollowUp()
+		EngageWithMembers()
+	case "coupons":
+		emailAddressToReceiveSamplePassUrl = cfg.Email
+		IssueCoupon()
+		pauseBeforeFollowUp()
+		EngageWithCoupons()
+	case "event-tickets":
+		emailAddressToReceiveSamplePassUrl = cfg.Email
+		IssueEventTicket()
+		pauseBeforeFollowUp()
+		EngageWithEventTicket()
+	case "flights":
+		emailAddressToReceiveSamplePassUrl = cfg.Email
+		flights.AppleCertificateID = cfg.AppleCertificateID
+		IssueBoardingPass()
+		pauseBeforeFollowUp()
+		EngageWithBoardingPass()
+	}
 }
 
-// In order to use PassKit SDK, you need to establish the connection to the PassKit server first.
-func ConnectWithPasskitServer() {
-	// Regular gRpc Connection
-	shared.ConnectPasskitSdk(clientCertFile, clientKeyFile, clientCAFile, gRPCHost, gRPCPort)
-	// gRpc Connection Pooling need to swap shared.Conn to shared.GetConnectionPooling() in the example methods
-	shared.InitializeGRPCPool(clientCertFile, clientKeyFile, clientCAFile, gRPCHost, gRPCPort)
-
+func pauseBeforeFollowUp() {
+	if cleanupDelay <= 0 {
+		return
+	}
+	fmt.Printf("Waiting %s before follow-up and cleanup operations...\n", cleanupDelay)
+	time.Sleep(cleanupDelay)
 }
 
 // Each method has the minimum information needed to execute the method, if you
@@ -186,6 +207,8 @@ func IssueBoardingPass() {
 
 	flights.CreateAirports()
 
+	flights.WaitForFlightResources()
+
 	flights.CreateFlight(newTemplateId)
 
 	flights.CreateFlightDesignator(newTemplateId)
@@ -205,10 +228,8 @@ func EngageWithBoardingPass() {
 
 	flights.DeleteFlightDesignator()
 
-	// Delete arrival airport
-	flights.DeleteAirport("YY4")
-	// Delete departure airport
-	flights.DeleteAirport("ADP")
+	flights.DeleteAirport(flights.Origin)
+	flights.DeleteAirport(flights.Destination)
 
 	flights.DeleteCarrier()
 }
@@ -237,7 +258,7 @@ func IssueEventTicket() {
 
 	newEventId := event_tickets.CreateEvent(newVenueId, newProductionId)
 
-	newTicketId := event_tickets.IssueEventTicket(newTicketTypeId, newProductionId, newEventId)
+	newTicketId := event_tickets.IssueEventTicket(newTicketTypeId, newProductionId, newEventId, emailAddressToReceiveSamplePassUrl)
 
 	venueId = newVenueId
 

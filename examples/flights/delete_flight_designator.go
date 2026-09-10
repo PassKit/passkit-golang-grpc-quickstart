@@ -11,12 +11,12 @@ import (
 )
 
 // DeleteFlightDesignator takes an existing flight designation and deletes the flight designator associated with it.
-//If the flight designator doesn't exist it cannot be deleted.
-func DeleteFlightDesignator(){
+// If the flight designator doesn't exist it cannot be deleted.
+func DeleteFlightDesignator() {
 	fmt.Println("Start deleting a flight designation...")
 
 	// Generate PassKit Client object for Flights protocol.
-	pkFlightsClient := flights.NewFlightsClient(shared.Conn)
+	pkFlightsClient := flights.NewFlightsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -24,9 +24,9 @@ func DeleteFlightDesignator(){
 
 	// Create your existing flight designator.
 	flightDesignator := &flights.FlightDesignatorRequest{
-		CarrierCode: "YY",
-		FlightNumber: "YY123",
-		Revision: 0,
+		CarrierCode:  CarrierCode,
+		FlightNumber: FlightNumber,
+		Revision:     DesignatorRevision,
 	}
 
 	// Send gRPC request to delete flight designator.

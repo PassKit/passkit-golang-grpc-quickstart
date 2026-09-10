@@ -2,8 +2,8 @@ package coupons
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
 	"log"
 
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
@@ -16,7 +16,7 @@ func CountCoupons(campaignId, offerId string) {
 	fmt.Println("Counting coupon records that match with conditions...")
 
 	// Generate a coupons module client
-	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.Conn)
+	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -31,8 +31,8 @@ func CountCoupons(campaignId, offerId string) {
 					Condition: io.Operator_AND,
 					FieldFilters: []*io.FieldFilter{
 						{
-							FilterField: "offerId",
-							FilterValue: offerId,
+							FilterField:    "offerId",
+							FilterValue:    offerId,
 							FilterOperator: "eq",
 						},
 					},

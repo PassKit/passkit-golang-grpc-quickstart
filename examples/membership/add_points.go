@@ -4,19 +4,19 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
 )
 
 // AddPoints takes a programId of an existing program and memberId of existing member to add points to chosen member.
-func AddPoints(programId,memberId string)  {
+func AddPoints(programId, memberId string) {
 	fmt.Println("Start adding points to a member...")
 
 	// Generate a members module client
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -24,8 +24,8 @@ func AddPoints(programId,memberId string)  {
 
 	//The points to add to should be whatever point scheme is used on your card e.g. Points, TierPoints or SecondaryPoints
 	addPointsTo := &members.EarnBurnPointsRequest{
-		Id:        memberId,
-		ProgramId: programId,
+		Id:         memberId,
+		ProgramId:  programId,
 		TierPoints: 24,
 	}
 

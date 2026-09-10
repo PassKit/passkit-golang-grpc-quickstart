@@ -5,7 +5,6 @@ import (
 	"log"
 	"sync"
 
-	"github.com/PassKit/passkit-golang-grpc-sdk/helpers/router"
 	"google.golang.org/grpc"
 )
 
@@ -15,6 +14,20 @@ var (
 	currentIndex = 0
 	mu           sync.Mutex
 )
+
+// SetGRPCPoolSize configures the number of reusable connections before initialization.
+func SetGRPCPoolSize(size int) error {
+	mu.Lock()
+	defer mu.Unlock()
+	if size < 1 {
+		return fmt.Errorf("pool size must be at least 1")
+	}
+	if len(connPool) > 0 {
+		return fmt.Errorf("cannot change pool size after initialization")
+	}
+	poolSize = size
+	return nil
+}
 
 // InitializeGRPCPool initializes a pool of gRPC connections.
 func InitializeGRPCPool(clientCertFile, clientKeyFile, clientCAFile, gRPCHost, gRPCPort string) {
@@ -26,7 +39,7 @@ func InitializeGRPCPool(clientCertFile, clientKeyFile, clientCAFile, gRPCHost, g
 	fmt.Println("Initializing GRPC Connection Pool...")
 
 	for i := 0; i < poolSize; i++ {
-		conn, err := router.NewCertAuthTLSGRPCClient(fmt.Sprintf("%s:%s", gRPCHost, gRPCPort), clientCertFile, clientKeyFile, clientCAFile)
+		conn, err := newCertAuthTLSGRPCClient(fmt.Sprintf("%s:%s", gRPCHost, gRPCPort), clientCertFile, clientKeyFile, clientCAFile)
 		if err != nil {
 			log.Fatalf("Failed to create gRPC connection: %v", err)
 		}

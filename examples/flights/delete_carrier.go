@@ -11,12 +11,16 @@ import (
 )
 
 // DeleteCarrier takes an existing carrier code and deletes the carrier associated with it.
-//If the carrier doesn't exist it cannot be deleted.
-func DeleteCarrier(){
+// If the carrier doesn't exist it cannot be deleted.
+func DeleteCarrier() {
+	if !CarrierCreated {
+		log.Printf("Skipping carrier %s cleanup because this run did not create it.\n", CarrierCode)
+		return
+	}
 	fmt.Println("Start deleting a carrier...")
 
 	// Generate PassKit Client object for Flights protocol.
-	pkFlightsClient := flights.NewFlightsClient(shared.Conn)
+	pkFlightsClient := flights.NewFlightsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -24,7 +28,7 @@ func DeleteCarrier(){
 
 	// Create your existing carrier.
 	carrierCode := &flights.CarrierCode{
-		CarrierCode: "YY",
+		CarrierCode: CarrierCode,
 	}
 
 	// Send gRPC request to delete a carrier.

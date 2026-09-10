@@ -17,7 +17,7 @@ func DeleteCouponOffer(campaignId string) {
 	fmt.Println("Start deleting a coupon offer...")
 
 	// Generate a coupons module client
-	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.Conn)
+	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

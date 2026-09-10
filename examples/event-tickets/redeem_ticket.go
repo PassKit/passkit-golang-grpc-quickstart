@@ -18,7 +18,7 @@ func RedeemTicket(ticketId string) {
 	fmt.Println("Start redeeming an event ticket")
 
 	// Generate PassKit Client object for Event Tickets protocol.
-	pkEventsClient := event_tickets.NewEventTicketsClient(shared.Conn)
+	pkEventsClient := event_tickets.NewEventTicketsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

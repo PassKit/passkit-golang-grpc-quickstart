@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -17,7 +17,7 @@ func SendWelcomeEmail(memberId string) {
 	fmt.Println("Sending a welcome email...")
 
 	// Generate a distribution module client
-	pkDistributionClient := io.NewDistributionClient(shared.Conn)
+	pkDistributionClient := io.NewDistributionClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

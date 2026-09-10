@@ -1,4 +1,5 @@
 package coupons
+
 import (
 	"fmt"
 	"log"
@@ -17,7 +18,7 @@ func CreateCampaign() string {
 	fmt.Println("Start creating a coupon campaign...")
 
 	// Generate PassKit Client object for Coupon protocol.
-	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.Conn)
+	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

@@ -18,19 +18,19 @@ func CreateEvent(venueId string, productionId string) string {
 	fmt.Println("Start creating an event")
 
 	// Generate PassKit Client object for Event Tickets protocol.
-	pkEventsClient := event_tickets.NewEventTicketsClient(shared.Conn)
+	pkEventsClient := event_tickets.NewEventTicketsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
 	ctx = metadata.NewOutgoingContext(ctx, nil)
 
-	startDate := time.Date(2023, 12, 12, 13, 0, 0, 0, time.UTC)
+	startDate := time.Now().UTC().AddDate(0, 0, 14).Truncate(time.Hour).Add(13 * time.Hour)
 	tStartDate := timestamppb.New(startDate)
 
-	doorsOpen := time.Date(2023, 12, 12, 13, 0, 0, 0, time.UTC)
+	doorsOpen := startDate.Add(-time.Hour)
 	tDoorsOpen := timestamppb.New(doorsOpen)
 
-	endDate := time.Date(2023, 12, 13, 13, 0, 0, 0, time.UTC)
+	endDate := startDate.Add(3 * time.Hour)
 	tEndDate := timestamppb.New(endDate)
 
 	// Create the event.

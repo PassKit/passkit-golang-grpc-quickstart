@@ -2,8 +2,8 @@ package coupons
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
 	"log"
 
 	"golang.org/x/net/context"
@@ -11,11 +11,11 @@ import (
 )
 
 // RedeemCoupon takes a campaignId of an existing campaign and couponId of existing coupon to redeem that coupon.
-func RedeemCoupon(campaignId,couponId string)  {
+func RedeemCoupon(campaignId, couponId string) {
 	fmt.Println("Start redeeming a coupon...")
 
 	// Generate a coupons module client
-	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.Conn)
+	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -23,9 +23,9 @@ func RedeemCoupon(campaignId,couponId string)  {
 
 	//The points to add to should be whatever point scheme is used on your card e.g. Points, TierPoints or SecondaryPoints
 	redeemCoupon := &single_use_coupons.Coupon{
-		Id:        couponId,
+		Id:         couponId,
 		CampaignId: campaignId,
-		Status: single_use_coupons.CouponStatus_REDEEMED,
+		Status:     single_use_coupons.CouponStatus_REDEEMED,
 	}
 
 	response, err := pkCouponsClient.RedeemCoupon(ctx, redeemCoupon)
@@ -35,4 +35,3 @@ func RedeemCoupon(campaignId,couponId string)  {
 
 	fmt.Printf("You have successfully redeemed coupon [%v].\n", response.Id)
 }
-

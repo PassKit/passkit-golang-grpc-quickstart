@@ -18,7 +18,7 @@ func EnrolMember(programId, tierId, emailAddress string) string {
 	fmt.Println("Start enrolling a member...")
 
 	// Generate a members module client
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

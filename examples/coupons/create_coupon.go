@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/single_use_coupons"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -18,7 +18,7 @@ func CreateCoupon(campaignId, offerId, emailAddress string) string {
 	fmt.Println("Start creating a coupon...")
 
 	// Generate a coupons module client
-	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.Conn)
+	pkCouponsClient := single_use_coupons.NewSingleUseCouponsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -46,4 +46,3 @@ func CreateCoupon(campaignId, offerId, emailAddress string) string {
 
 	return couponId.Id
 }
-

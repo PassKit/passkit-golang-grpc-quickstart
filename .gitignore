@@ -1,0 +1,10 @@
+.env
+certs/*.pem
+bin/
+build/
+coverage.out
+*.test
+*.log
+.DS_Store
+.idea/
+.vscode/

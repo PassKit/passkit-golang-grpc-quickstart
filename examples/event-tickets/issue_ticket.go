@@ -15,17 +15,17 @@ import (
 )
 
 // IssueEventTicket takes a ticketTypeId, productionId and eventId to issue an event ticket.
-func IssueEventTicket(ticketTypeId string, productionId string, eventId string) string {
+func IssueEventTicket(ticketTypeId string, productionId string, eventId string, email string) string {
 	fmt.Println("Start issuing an event ticket")
 
 	// Generate PassKit Client object for Event Tickets protocol.
-	pkEventsClient := event_tickets.NewEventTicketsClient(shared.Conn)
+	pkEventsClient := event_tickets.NewEventTicketsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
 	ctx = metadata.NewOutgoingContext(ctx, nil)
 
-	endDate := time.Date(2023, 12, 13, 13, 0, 0, 0, time.UTC)
+	endDate := time.Now().UTC().AddDate(0, 0, 15)
 	tEndDate := timestamppb.New(endDate)
 
 	ticketEvent := event_tickets.IssueTicketRequest_EventId{
@@ -42,7 +42,7 @@ func IssueEventTicket(ticketTypeId string, productionId string, eventId string) 
 			Surname:      "Loopy",
 			Forename:     "Larry",
 			DisplayName:  "Larry",
-			EmailAddress: "",
+			EmailAddress: email,
 		},
 		FaceValue: &event_tickets.FaceValue{
 			Amount:   100,

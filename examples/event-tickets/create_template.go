@@ -14,7 +14,7 @@ import (
 func CreateTemplate() string {
 	fmt.Println("Start creating pass template...")
 	// Generate PassKit Client object for Templates protocol.
-	pkTemplatesClient := io.NewTemplatesClient(shared.Conn)
+	pkTemplatesClient := io.NewTemplatesClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

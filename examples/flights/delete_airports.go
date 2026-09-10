@@ -11,12 +11,16 @@ import (
 )
 
 // DeleteAirport takes an existing airport code and deletes the airport associated with it.
-//If the airport doesn't exist it cannot be deleted.
-func DeleteAirport(airport string){
+// If the airport doesn't exist it cannot be deleted.
+func DeleteAirport(airport string) {
+	if !CreatedAirports[airport] {
+		log.Printf("Skipping airport %s cleanup because this run did not create it.\n", airport)
+		return
+	}
 	fmt.Println("Start deleting airport...")
 
 	// Generate PassKit Client object for Flights protocol.
-	pkFlightsClient := flights.NewFlightsClient(shared.Conn)
+	pkFlightsClient := flights.NewFlightsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()

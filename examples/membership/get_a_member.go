@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -17,7 +17,7 @@ func GetSingleMember(memberId string) {
 	fmt.Println("Getting a member record...")
 
 	// Generate a members module client
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -32,5 +32,5 @@ func GetSingleMember(memberId string) {
 		log.Fatalf("Get member err: %v", err)
 	}
 
-	fmt.Printf("You have successfully retrieved a member record for [%s] %v\n", memberId, *memberRecord)
+	fmt.Printf("You have successfully retrieved a member record for [%s] %v\n", memberId, memberRecord)
 }

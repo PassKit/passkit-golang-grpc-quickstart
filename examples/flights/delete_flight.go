@@ -2,23 +2,21 @@ package flights
 
 import (
 	"fmt"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io"
-	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
+	"github.com/PassKit/passkit-golang-grpc-sdk/io/flights"
 	"log"
-
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
 )
 
 // DeleteFlight takes an existing flight number as well as other details and deletes the flight associated with it.
-//If the flight doesn't exist it cannot be deleted.
-func DeleteFlight(){
+// If the flight doesn't exist it cannot be deleted.
+func DeleteFlight() {
 	fmt.Println("Start deleting flight...")
 
 	// Generate PassKit Client object for Flights protocol.
-	pkFlightsClient := flights.NewFlightsClient(shared.Conn)
+	pkFlightsClient := flights.NewFlightsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -26,11 +24,11 @@ func DeleteFlight(){
 
 	// Create your existing flight.
 	flight := &flights.FlightRequest{
-		CarrierCode: "YY",
-		FlightNumber: "YY123",
-		BoardingPoint: "YY4",
-		DeplaningPoint: "ADP",
-		DepartureDate: &io.Date{Year: 2022, Month: 03, Day: 28},
+		CarrierCode:    CarrierCode,
+		FlightNumber:   FlightNumber,
+		BoardingPoint:  Origin,
+		DeplaningPoint: Destination,
+		DepartureDate:  DepartureDate,
 	}
 
 	// Send gRPC request to delete a flight.

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io"
 	"github.com/PassKit/passkit-golang-grpc-sdk/io/members"
-	"github.com/PassKit/passkit-golang-grpc-quickstart/examples/shared"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/metadata"
@@ -18,7 +18,7 @@ func CreateTier(programId string) string {
 	fmt.Println("Start creating a membership tier...")
 
 	// Generate a template module client
-	pkTemplatesClient := io.NewTemplatesClient(shared.Conn)
+	pkTemplatesClient := io.NewTemplatesClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
@@ -47,7 +47,7 @@ func CreateTier(programId string) string {
 
 	// We now have a program id which we created in create_program.go example and default pass template.
 	// Let's create a tier. First, let's create a members module client.
-	pkMembersClient := members.NewMembersClient(shared.Conn)
+	pkMembersClient := members.NewMembersClient(shared.GetGRPCConnection())
 
 	tier := &members.Tier{
 		ProgramId:      programId,
@@ -55,7 +55,7 @@ func CreateTier(programId string) string {
 		Id:             "base",
 		TierIndex:      uint32(1),
 		Name:           "Base Tier",
-		Timezone: "UTC",
+		Timezone:       "UTC",
 	}
 
 	tierId, err := pkMembersClient.CreateTier(ctx, tier)

@@ -11,28 +11,30 @@ import (
 )
 
 // CreateFlight takes templateId to use as base template and uses a carrier code and creates a new flight.
-func CreateFlight(templateId string){
+func CreateFlight(templateId string) {
 	fmt.Println("Start creating a Flight...")
 
 	// Generate PassKit Client object for Flights protocol.
-	pkFlightsClient := flights.NewFlightsClient(shared.Conn)
+	pkFlightsClient := flights.NewFlightsClient(shared.GetGRPCConnection())
 
 	// Generate context object to connect to the server.
 	ctx := context.Background()
 	ctx = metadata.NewOutgoingContext(ctx, nil)
 
 	localDate := &io.LocalDateTime{
-		DateTime: "2022-03-28",
+		DateTime: DepartureDateTime,
 	}
+	arrivalDate := &io.LocalDateTime{DateTime: departure.Format("2006-01-02") + "T21:00:00"}
 	// Create your flight.
 	flight := &flights.Flight{
-		CarrierCode: "YY",
-		FlightNumber: "12345",
-		BoardingPoint: "YY4",
-		DeplaningPoint: "ADP",
-		DepartureDate: &io.Date{Year: 2022, Month: 03, Day: 28},
+		CarrierCode:            CarrierCode,
+		FlightNumber:           FlightNumber,
+		BoardingPoint:          Origin,
+		DeplaningPoint:         Destination,
+		DepartureDate:          DepartureDate,
 		ScheduledDepartureTime: localDate,
-		PassTemplateId: templateId,
+		ScheduledArrivalTime:   arrivalDate,
+		PassTemplateId:         templateId,
 	}
 
 	// Send gRPC request to create a flight.
