@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/PassKit/passkit-golang-grpc-sdk v1.1.163
 	golang.org/x/net v0.58.0
-	google.golang.org/grpc v1.83.2
+	google.golang.org/grpc v1.84.0
 	google.golang.org/protobuf v1.36.12
 )
 
